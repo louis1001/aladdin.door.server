@@ -1,12 +1,12 @@
 from aladdin_connect import AladdinConnectClient
-from enum import StrEnum
+from enum import Enum, auto
 
-class DoorStatus(StrEnum):
-    open = 'open'
-    closed = 'closed'
-    opening = 'opening'
-    closing = 'closing'
-    unknown = 'unknown'
+class DoorStatus(Enum):
+    open = auto
+    closed = auto
+    opening = auto
+    closing = auto
+    unknown = auto
 
 class Door:
     def __init__(self, obj):
@@ -32,11 +32,18 @@ class GarageConnection:
         key = self.client.get_door_status(self.door.id, self.door.number)
         return DoorStatus[key]
 
+    def is_current_status(self, compare):
+        as_status = compare
+        if not isinstance(compare, DoorStatus):
+            as_status = DoorStatus[compare]
+
+        return self.get_status() == as_status
+
     def is_open(self):
-        return self.get_status() == DoorStatus.open
+        return self.is_current_status(DoorStatus.open)
 
     def can_open(self):
-        return self.get_status() == DoorStatus.closed
+        return self.is_current_status(DoorStatus.closed)
 
     def can_close(self):
         return self.is_open()
