@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <style>
+        main {
+            text-align: center;
+            font-family: sans-serif;
+            color: #7788bb;
+        }
+
+        h1 {
+            margin-top: 35vh;
+            text-align: center;
+        }
+    </style>
+    <main>
+    <h1>It's running!</h1>
+    <h2>You can open the garage</h2>
+
+    <div>
+        <button id="open-button">Open</button>
+        <button id="toggle-button">Toggle</button>
+        <button id="close-button">Close</button>
+    </div>
+    </main>
+    <script>
+        function callPath(path) {
+            let domain = "192.168.1.7"
+            let port = "8000"
+            fetch(`http://${domain}:8000/${path}`, {
+                method: 'POST',
+                redirect: 'manual'
+            })
+                .then(result => {
+                    if (result.ok) {
+                        console.log("Success!")
+                    } else {
+                        console.log("Failure")
+                    }
+                })
+        }
+
+        let openButton = document.getElementById('open-button')
+        let toggleButton = document.getElementById('toggle-button')
+        let closeButton = document.getElementById('close-button')
+
+        openButton.addEventListener('click', ()=>{ callPath('open') })
+        closeButton.addEventListener('click', ()=>{ callPath('close') })
+        toggleButton.addEventListener('click', ()=>{ callPath('toggle') })
+    </script>
+</body>
+</html>
