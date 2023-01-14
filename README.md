@@ -1,0 +1,1 @@
+This is a personal project for my own needs. You could take this code and adapt it, but it's just a quick solution for what I need.
